@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Management Summary Cabinet Review</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    :root {
+      --ink: #111827;
+      --ink-soft: #374151;
+      --sand: #f4efe8;
+      --peach: #f6d6b8;
+      --ember: #e76f51;
+      --teal: #2a9d8f;
+      --sky: #9ad0ec;
+      --card: #fffdf8;
+      --shadow: 0 16px 40px rgba(17, 24, 39, 0.14);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 20% 20%, rgba(231, 111, 81, 0.18), transparent 55%),
+                  radial-gradient(circle at 80% 10%, rgba(42, 157, 143, 0.22), transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(154, 208, 236, 0.3), transparent 55%),
+                  var(--sand);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        135deg,
+        rgba(17, 24, 39, 0.03) 0,
+        rgba(17, 24, 39, 0.03) 1px,
+        transparent 1px,
+        transparent 8px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      padding: 48px 6vw 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .hero {
+      flex: 1 1 340px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.08);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+
+    h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+      margin: 14px 0 8px;
+    }
+
+    p.lead {
+      margin: 0;
+      max-width: 520px;
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+    }
+
+    .status-card {
+      flex: 1 1 260px;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+
+    .status-card strong { font-weight: 600; }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      border: 1px solid rgba(17, 24, 39, 0.1);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.98rem;
+      background: #fff;
+      resize: vertical;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button.primary {
+      background: var(--ember);
+      color: white;
+      box-shadow: 0 14px 26px rgba(231, 111, 81, 0.3);
+    }
+
+    button.secondary {
+      background: rgba(17, 24, 39, 0.08);
+      color: var(--ink);
+    }
+
+    button.danger {
+      background: #ef4444;
+      color: white;
+      box-shadow: 0 12px 22px rgba(239, 68, 68, 0.3);
+    }
+
+    button:active { transform: translateY(1px); }
+
+    details.advanced {
+      margin-top: 18px;
+      border-top: 1px dashed rgba(17, 24, 39, 0.12);
+      padding-top: 14px;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .fields {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+    }
+
+    input, select {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(17, 24, 39, 0.1);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .results {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      border-radius: 16px;
+      padding: 16px 18px;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.03), transparent);
+      animation: fadeUp 0.4s ease;
+    }
+
+    .card.placeholder {
+      border-style: dashed;
+      opacity: 0.86;
+    }
+
+    .card header {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: white;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .role {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+    }
+
+    .title {
+      font-weight: 700;
+      margin: 4px 0 6px;
+    }
+
+    .summary {
+      margin: 0 0 8px;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .placeholder-text {
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    .details {
+      margin: 0 0 10px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    ul.actions {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.92rem;
+    }
+
+    .meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+    }
+
+    .validation {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: #b91c1c;
+    }
+
+    .debug {
+      margin-top: 24px;
+    }
+
+    .debug-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-top: 12px;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 12px;
+      overflow: auto;
+      max-height: 320px;
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .status-line {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.08);
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .loading {
+      opacity: 1;
+    }
+
+    textarea:disabled,
+    select:disabled,
+    input:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(17, 24, 39, 0.2);
+      border-top-color: var(--ember);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 720px) {
+      header { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="hero">
+        <span class="badge">Cabinet Review</span>
+        <h1>Management Summary Review</h1>
+        <p class="lead">Structured, persona-driven feedback with blunt quality checks and JSON-ready output.</p>
+      </div>
+      <div class="status-card" id="status-card">
+        <div><strong>Model</strong>: <span id="status-model">-</span></div>
+        <div><strong>Think</strong>: <span id="status-think">-</span></div>
+        <div><strong>Format</strong>: <span id="status-format">-</span></div>
+        <div><strong>Reviewers</strong>: <span id="status-reviewers">-</span></div>
+        <div><strong>Last run</strong>: <span id="status-latency">-</span></div>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="panel" id="input-panel">
+        <h2>Management Summary</h2>
+        <textarea id="summary"></textarea>
+        <div class="controls">
+          <button class="primary" id="run-btn">Run Review</button>
+          <button class="danger hidden" id="stop-btn" disabled>Stop</button>
+          <button class="secondary" id="smoke-btn">Smoke Test</button>
+        </div>
+        <div class="status-line" id="run-status">
+          <span id="spinner" class="spinner hidden"></span>
+          <span id="status-text">Idle.</span>
+        </div>
+        <details class="advanced">
+          <summary>Advanced controls</summary>
+          <div id="reviewers-container" class="fields" style="display: block; margin-bottom: 12px; border-bottom: 1px dashed rgba(17, 24, 39, 0.12); padding-bottom: 12px;"></div>
+          <div class="fields">
+            <label>
+              Think level
+              <select id="think">
+                <option value="low">low</option>
+                <option value="medium">medium</option>
+                <option value="high">high</option>
+              </select>
+            </label>
+            <label>
+              Max tokens
+              <input id="num_predict" type="number" min="128" step="64" value="800" />
+            </label>
+            <label>
+              Context size
+              <input id="num_ctx" type="number" min="512" step="256" value="2048" />
+            </label>
+            <label>
+              Temperature
+              <input id="temperature" type="number" min="0" max="1" step="0.1" value="0" />
+            </label>
+            <label>
+              Top-p
+              <input id="top_p" type="number" min="0.1" max="1" step="0.1" value="0.9" />
+            </label>
+            <label>
+              Repeat penalty
+              <input id="repeat_penalty" type="number" min="1" max="2" step="0.05" value="1.1" />
+            </label>
+            <label>
+              Output format
+              <select id="format">
+                <option value="schema" selected>schema (strict)</option>
+                <option value="json">json (faster)</option>
+                <option value="none">none</option>
+              </select>
+            </label>
+          </div>
+        </details>
+      </div>
+
+      <div class="panel">
+        <h2>Cabinet Reviews</h2>
+        <div id="results" class="results"></div>
+      </div>
+    </section>
+
+    <section class="panel debug">
+      <h2>Debug & Logs</h2>
+      <div class="debug-grid">
+        <div>
+          <div class="pill">Trace</div>
+          <pre id="trace"></pre>
+        </div>
+        <div>
+          <div class="pill">Raw JSON</div>
+          <pre id="raw"></pre>
+        </div>
+        <div>
+          <div class="pill">Thinking</div>
+          <pre id="thinking"></pre>
+        </div>
+        <div>
+          <div class="pill">Stream</div>
+          <pre id="stream"></pre>
+        </div>
+        <div>
+          <div class="pill">Prompt</div>
+          <pre id="prompt"></pre>
+        </div>
+        <div>
+          <div class="pill">Parsed</div>
+          <pre id="parsed"></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const summaryEl = document.getElementById('summary');
+    const resultsEl = document.getElementById('results');
+    const runBtn = document.getElementById('run-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const smokeBtn = document.getElementById('smoke-btn');
+    const statusText = document.getElementById('status-text');
+    const spinner = document.getElementById('spinner');
+    const statusModel = document.getElementById('status-model');
+    const statusThink = document.getElementById('status-think');
+    const statusFormat = document.getElementById('status-format');
+    const statusReviewers = document.getElementById('status-reviewers');
+    const statusLatency = document.getElementById('status-latency');
+
+    const traceEl = document.getElementById('trace');
+    const rawEl = document.getElementById('raw');
+    const thinkingEl = document.getElementById('thinking');
+    const streamEl = document.getElementById('stream');
+    const promptEl = document.getElementById('prompt');
+    const parsedEl = document.getElementById('parsed');
+
+    const inputPanel = document.getElementById('input-panel');
+    const reviewCards = new Map();
+    const reviewStateById = new Map();
+    let cabinetSize = null;
+    let cabinet = [];
+    let cabinetById = new Map();
+    const partialUpdater = createPartialReviewUpdater(applyPartialReview);
+    let activeRunId = 0;
+    let activeController = null;
+    let activeReader = null;
+    let cancelRequested = false;
+
+    const defaultSummary = `This report summarise the results of a recent penetration test conducted against the clients internal and external systems. The goal of this assesment was to identify security weakness that could be exploitet by a malicious attacker, and to give an overal view of the organisations current security posture.\n\nDuring the testing, several issues where identified across multiple areas of the enviroment. These included weak password policy's, outdated software versions, and misconfigured network services. Some of these vulnerabilities where rated as High risk, meaning they could lead to unauthorised access, data loss, or full system compromise if attacked in a real-world scenario. Other findings where categorised as Medium or Low risk, but still require attention.`;
+
+    summaryEl.value = defaultSummary;
+
+    function setStatus(message) {
+      statusText.textContent = message;
+    }
+
+    function setLoading(isLoading, message) {
+      inputPanel.classList.toggle('loading', isLoading);
+      runBtn.disabled = isLoading;
+      smokeBtn.disabled = isLoading;
+      inputPanel.querySelectorAll('textarea, select, input').forEach((el) => {
+        el.disabled = isLoading;
+      });
+      spinner.classList.toggle('hidden', !isLoading);
+      if (isLoading) {
+        setStatus(message || 'Connecting to model...');
+      }
+    }
+
+    function setReviewRunning(isRunning) {
+      runBtn.classList.toggle('hidden', isRunning);
+      stopBtn.disabled = !isRunning;
+      stopBtn.classList.toggle('hidden', !isRunning);
+    }
+
+    function appendStream(line) {
+      const next = `${streamEl.textContent}${line}\n`;
+      streamEl.textContent = next.length > 12000 ? next.slice(-12000) : next;
+    }
+
+    function getSelectedReviewerIds() {
+      return Array.from(document.querySelectorAll('input[name="reviewer"]:checked'))
+        .map(el => el.value);
+    }
+
+    function ensureCardForPerson(person, { placeholder = true } = {}) {
+      if (!person || !person.id) return null;
+      let card = reviewCards.get(person.id);
+      if (card) return card;
+
+      card = document.createElement('article');
+      card.className = 'card';
+      if (placeholder) card.classList.add('placeholder');
+      card.style.borderColor = person.color || 'transparent';
+      card.innerHTML = `
+        <header>
+          <div class="avatar card-avatar" style="background: ${person.color || '#111827'}"></div>
+          <div>
+            <h3 class="card-name"></h3>
+            <div class="role card-role"></div>
+          </div>
+        </header>
+        <div class="title card-title placeholder-text">Waiting for review...</div>
+        <div class="summary card-summary placeholder-text">Streaming output...</div>
+        <div class="details card-details placeholder-text">Details will appear as soon as this reviewer completes.</div>
+        <ul class="actions card-actions"><li class="placeholder-text">No actions yet.</li></ul>
+        <div class="meta">
+          <span>Latency: <span class="card-latency">-</span></span>
+          <span>ID: <span class="card-id">${person.id}</span></span>
+        </div>
+        <div class="validation card-validation"></div>
+      `;
+      resultsEl.appendChild(card);
+      reviewCards.set(person.id, card);
+      updateCardPerson(card, person);
+      return card;
+    }
+
+    function seedReviewCards(people) {
+      if (!Array.isArray(people) || people.length === 0) return;
+      people.forEach((person) => {
+        mergeReviewState(person.id, { person, review: {}, complete: false });
+        renderCardFromState(person.id);
+      });
+    }
+
+    function createPartialReviewUpdater(onUpdate) {
+      const tracker = createOpenObjectTracker();
+      const lastById = new Map();
+
+      return {
+        reset() {
+          tracker.reset();
+          lastById.clear();
+        },
+        push(chunk) {
+          if (!chunk) return;
+          const open = tracker.push(chunk);
+          if (!open) return;
+
+          const id = extractStringField(open, 'id');
+          if (!id) return;
+
+          const partial = { id, review: {} };
+          const title = extractStringFieldPartial(open, 'title');
+          if (title) partial.review.title = title.value;
+          const summary = extractStringFieldPartial(open, 'summary');
+          if (summary) partial.review.summary = summary.value;
+          const details = extractStringFieldPartial(open, 'details');
+          if (details) partial.review.details = details.value;
+          const actions = extractStringArray(open, 'actions');
+          if (actions.length) partial.review.actions = actions;
+
+          const prev = lastById.get(id) || {};
+          if (!hasReviewChanges(prev, partial.review)) return;
+          lastById.set(id, { ...prev, ...partial.review });
+          onUpdate(partial);
+        },
+      };
+    }
+
+    function createOpenObjectTracker() {
+      let buffer = '';
+      let cursor = 0;
+      let inString = false;
+      let escape = false;
+      let arrayStarted = false;
+      let depth = 0;
+      let objStart = null;
+
+      return {
+        reset() {
+          buffer = '';
+          cursor = 0;
+          inString = false;
+          escape = false;
+          arrayStarted = false;
+          depth = 0;
+          objStart = null;
+        },
+        push(chunk) {
+          buffer += chunk;
+
+          for (let i = cursor; i < buffer.length; i += 1) {
+            const ch = buffer[i];
+
+            if (escape) {
+              escape = false;
+              continue;
+            }
+
+            if (inString) {
+              if (ch === '\\') {
+                escape = true;
+              } else if (ch === '"') {
+                inString = false;
+              }
+              continue;
+            }
+
+            if (ch === '"') {
+              inString = true;
+              continue;
+            }
+
+            if (!arrayStarted) {
+              if (ch === '[') arrayStarted = true;
+              continue;
+            }
+
+            if (ch === '{') {
+              if (depth === 0) objStart = i;
+              depth += 1;
+              continue;
+            }
+
+            if (ch === '}') {
+              if (depth > 0) {
+                depth -= 1;
+                if (depth === 0) {
+                  objStart = null;
+                }
+              }
+            }
+          }
+
+          cursor = buffer.length;
+
+          if (objStart !== null && objStart > 0) {
+            buffer = buffer.slice(objStart);
+            cursor -= objStart;
+            objStart = 0;
+          } else if (objStart === null && buffer.length > 8192) {
+            buffer = buffer.slice(-2048);
+            cursor = buffer.length;
+          }
+
+          return objStart !== null ? buffer : '';
+        },
+      };
+    }
+
+    function extractStringField(objText, key) {
+      const re = new RegExp(`"${key}"\\s*:\\s*"((?:\\\\.|[^"\\\\])*)"`);
+      const match = re.exec(objText);
+      if (!match) return undefined;
+      return decodeJsonString(match[1]);
+    }
+
+    function extractStringFieldPartial(objText, key) {
+      const keyIdx = objText.indexOf(`"${key}"`);
+      if (keyIdx === -1) return null;
+      const colonIdx = objText.indexOf(':', keyIdx);
+      if (colonIdx === -1) return null;
+      let i = colonIdx + 1;
+      while (i < objText.length && /\s/.test(objText[i])) i += 1;
+      if (objText[i] !== '"') return null;
+      i += 1;
+      let value = '';
+      let escape = false;
+      for (; i < objText.length; i += 1) {
+        const ch = objText[i];
+        if (escape) {
+          value += ch;
+          escape = false;
+          continue;
+        }
+        if (ch === '\\') {
+          value += ch;
+          escape = true;
+          continue;
+        }
+        if (ch === '"') {
+          return { value: decodeJsonString(value), complete: true };
+        }
+        value += ch;
+      }
+      return { value: decodeJsonString(value), complete: false };
+    }
+
+    function extractStringArray(objText, key) {
+      const keyIdx = objText.indexOf(`"${key}"`);
+      if (keyIdx === -1) return [];
+      const start = objText.indexOf('[', keyIdx);
+      if (start === -1) return [];
+
+      const items = [];
+      let inString = false;
+      let escape = false;
+      let current = '';
+      const slice = objText.slice(start + 1);
+
+      for (let i = 0; i < slice.length; i += 1) {
+        const ch = slice[i];
+
+        if (escape) {
+          current += ch;
+          escape = false;
+          continue;
+        }
+
+        if (inString) {
+          if (ch === '\\') {
+            current += ch;
+            escape = true;
+            continue;
+          }
+          if (ch === '"') {
+            inString = false;
+            items.push(decodeJsonString(current));
+            current = '';
+            continue;
+          }
+          current += ch;
+          continue;
+        }
+
+        if (ch === '"') {
+          inString = true;
+          current = '';
+          continue;
+        }
+
+        if (ch === ']') {
+          break;
+        }
+      }
+
+      return items;
+    }
+
+    function decodeJsonString(raw) {
+      try {
+        return JSON.parse(`"${raw}"`);
+      } catch {
+        return raw
+          .replace(/\\n/g, '\n')
+          .replace(/\\t/g, '\t')
+          .replace(/\\"/g, '"')
+          .replace(/\\\\/g, '\\');
+      }
+    }
+
+    function mergeReviewState(id, next) {
+      const prev = reviewStateById.get(id) || {
+        person: cabinetById.get(id) || { id, name: id, role: 'Unknown', color: '#111827', icon: '?' },
+        review: {},
+        validation: null,
+        ms: null,
+        complete: false,
+      };
+      const merged = {
+        ...prev,
+        ...next,
+        review: next.review ? { ...prev.review, ...next.review } : prev.review,
+      };
+      reviewStateById.set(id, merged);
+      return merged;
+    }
+
+    function updateCardPerson(card, person) {
+      if (!card || !person) return;
+      card.style.borderColor = person.color || 'transparent';
+      const nameEl = card.querySelector('.card-name');
+      const roleEl = card.querySelector('.card-role');
+      const avatarEl = card.querySelector('.card-avatar');
+      const idEl = card.querySelector('.card-id');
+      if (nameEl) nameEl.textContent = person.name || person.id || '';
+      if (roleEl) roleEl.textContent = person.role || '';
+      if (avatarEl) {
+        avatarEl.style.background = person.color || '#111827';
+        avatarEl.textContent = person.icon || (person.name ? person.name[0] : person.id ? person.id[0] : '?');
+      }
+      if (idEl) idEl.textContent = person.id || '';
+    }
+
+    function renderCardFromState(id) {
+      const state = reviewStateById.get(id);
+      if (!state) return;
+      const person = state.person || cabinetById.get(id) || { id, name: id, role: 'Unknown', color: '#111827', icon: '?' };
+      const card = ensureCardForPerson(person, { placeholder: true });
+      updateCardPerson(card, person);
+
+      const titleEl = card.querySelector('.card-title');
+      const summaryNode = card.querySelector('.card-summary');
+      const detailsNode = card.querySelector('.card-details');
+      const actionsEl = card.querySelector('.card-actions');
+      const latencyEl = card.querySelector('.card-latency');
+      const validationEl = card.querySelector('.card-validation');
+
+      const review = state.review || {};
+      if ('title' in review && titleEl) {
+        titleEl.textContent = review.title || '';
+        titleEl.classList.toggle('placeholder-text', !review.title);
+      }
+      if ('summary' in review && summaryNode) {
+        summaryNode.textContent = review.summary || '';
+        summaryNode.classList.toggle('placeholder-text', !review.summary);
+      }
+      if ('details' in review && detailsNode) {
+        detailsNode.textContent = review.details || '';
+        detailsNode.classList.toggle('placeholder-text', !review.details);
+      }
+      if ('actions' in review && actionsEl) {
+        const actions = Array.isArray(review.actions) ? review.actions : [];
+        actionsEl.innerHTML = actions.length
+          ? actions.map(a => `<li>${a}</li>`).join('')
+          : '<li class="placeholder-text">No actions yet.</li>';
+      }
+      if (latencyEl) {
+        latencyEl.textContent = Number.isFinite(state.ms) ? `${state.ms}ms` : '-';
+      }
+      if (validationEl) {
+        const issues = state.validation && state.validation.length
+          ? `Validation: ${state.validation.join(' | ')}`
+          : '';
+        validationEl.textContent = issues;
+      }
+
+      const hasReviewData = !!(review.title || review.summary || review.details || (Array.isArray(review.actions) && review.actions.length));
+      card.classList.toggle('placeholder', !hasReviewData && !state.complete);
+    }
+
+    function renderResults(data) {
+      resultsEl.innerHTML = '';
+      reviewCards.clear();
+      reviewStateById.clear();
+      if (!data.results || data.results.length === 0) {
+        resultsEl.innerHTML = '<div class="card">No reviews returned.</div>';
+        return;
+      }
+
+      data.results.forEach((item) => {
+        mergeReviewState(item.person.id, {
+          person: item.person,
+          review: item.review,
+          validation: item.validation,
+          ms: item.ms,
+          complete: true,
+        });
+        renderCardFromState(item.person.id);
+      });
+    }
+
+    function upsertReview(item) {
+      if (!item || !item.person || !item.review) return;
+      mergeReviewState(item.person.id, {
+        person: item.person,
+        review: item.review,
+        validation: item.validation,
+        ms: item.ms,
+        complete: true,
+      });
+      renderCardFromState(item.person.id);
+    }
+
+    function applyPartialReview(partial) {
+      if (!partial || !partial.id) return;
+      const existing = reviewStateById.get(partial.id);
+      if (existing?.complete) return;
+      const mergedReview = partial.review || {};
+      const prevReview = existing?.review || {};
+      if (!hasReviewChanges(prevReview, mergedReview)) return;
+      mergeReviewState(partial.id, {
+        person: existing?.person || cabinetById.get(partial.id) || { id: partial.id, name: partial.id, role: 'Unknown', color: '#111827', icon: '?' },
+        review: mergedReview,
+        complete: false,
+      });
+      renderCardFromState(partial.id);
+    }
+
+    function hasReviewChanges(prev, next) {
+      const keys = ['title', 'summary', 'details', 'actions'];
+      return keys.some((key) => {
+        if (!(key in next)) return false;
+        if (key === 'actions') {
+          const prevList = Array.isArray(prev.actions) ? prev.actions : [];
+          const nextList = Array.isArray(next.actions) ? next.actions : [];
+          if (prevList.length !== nextList.length) return true;
+          return prevList.some((val, idx) => val !== nextList[idx]);
+        }
+        return prev[key] !== next[key];
+      });
+    }
+
+    async function runReview() {
+      const runId = ++activeRunId;
+      let completed = false;
+      cancelRequested = false;
+
+      if (activeController) {
+        activeController.abort();
+      }
+      if (activeReader) {
+        try { await activeReader.cancel(); } catch {}
+      }
+
+      const controller = new AbortController();
+      activeController = controller;
+      activeReader = null;
+
+      const isCurrent = () => runId === activeRunId;
+      const setStatusRun = (message) => {
+        if (!isCurrent()) return;
+        setStatus(message);
+      };
+      const setLoadingRun = (isLoading, message) => {
+        if (!isCurrent()) return;
+        setLoading(isLoading, message);
+      };
+      const setReviewRunningRun = (isRunning) => {
+        if (!isCurrent()) return;
+        setReviewRunning(isRunning);
+      };
+
+      setLoadingRun(true);
+      setReviewRunningRun(true);
+      traceEl.textContent = '';
+      rawEl.textContent = '';
+      thinkingEl.textContent = '';
+      streamEl.textContent = '';
+      promptEl.textContent = '';
+      parsedEl.textContent = '';
+      resultsEl.innerHTML = '';
+      reviewCards.clear();
+      reviewStateById.clear();
+      partialUpdater.reset();
+      statusLatency.textContent = '-';
+      setStatusRun('Connecting to stream...');
+
+      const selectedIds = getSelectedReviewerIds();
+      const selectedPeople = selectedIds.length
+        ? selectedIds.map(id => cabinetById.get(id)).filter(Boolean)
+        : cabinet;
+      seedReviewCards(selectedPeople);
+
+      const finish = () => {
+        if (completed) return;
+        completed = true;
+        setReviewRunningRun(false);
+        setLoadingRun(false);
+      };
+
+      const payload = {
+        text: summaryEl.value,
+        reviewerIds: selectedIds,
+        options: {
+          think: document.getElementById('think').value,
+          num_predict: Number(document.getElementById('num_predict').value),
+          num_ctx: Number(document.getElementById('num_ctx').value),
+          temperature: Number(document.getElementById('temperature').value),
+          top_p: Number(document.getElementById('top_p').value),
+          repeat_penalty: Number(document.getElementById('repeat_penalty').value),
+          format: document.getElementById('format').value,
+        }
+      };
+
+      try {
+        const res = await fetch('/api/review/stream', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+
+        if (!isCurrent()) {
+          if (res.body) {
+            try { await res.body.cancel(); } catch {}
+          }
+          return;
+        }
+
+        if (!res.ok || !res.body) {
+          const data = await res.json();
+          traceEl.textContent = JSON.stringify(data.trace || [], null, 2);
+          rawEl.textContent = data.raw || '';
+          thinkingEl.textContent = data.thinking || '';
+          promptEl.textContent = data.prompt || '';
+          appendStream(`[error] ${data.error || 'Review failed'}`);
+          finish();
+          throw new Error(data.error || 'Review failed');
+        }
+
+        const reader = res.body.getReader();
+        activeReader = reader;
+        const decoder = new TextDecoder();
+        let buffer = '';
+        let firstEventTimer = setTimeout(() => {
+          setStatusRun('Waiting for first stream event...');
+        }, 2000);
+
+        const handleEvent = (block) => {
+          if (!isCurrent()) return;
+          let event = 'message';
+          let dataStr = '';
+          block.split('\n').forEach((line) => {
+            if (line.startsWith('event:')) event = line.slice(6).trim();
+            if (line.startsWith('data:')) dataStr += line.slice(5).trim();
+          });
+          if (!dataStr) return;
+          let payload;
+          try {
+            payload = JSON.parse(dataStr);
+          } catch {
+            return;
+          }
+
+          if (firstEventTimer) {
+            clearTimeout(firstEventTimer);
+            firstEventTimer = null;
+          }
+
+          appendStream(`[${event}] ${dataStr}`);
+
+          if (event === 'start') {
+            statusModel.textContent = payload.model || '-';
+            statusThink.textContent = payload.request?.think || '-';
+            statusFormat.textContent = payload.request?.format || '-';
+            statusReviewers.textContent = payload.reviewers ?? '-';
+            statusLatency.textContent = '-';
+            setStatusRun('Streaming reviews...');
+          }
+
+          if (event === 'review') {
+            upsertReview(payload);
+            const total = Number(statusReviewers.textContent) || cabinetSize || '-';
+            setStatusRun(`Streaming reviews... ${reviewCards.size}/${total}`);
+          }
+
+          if (event === 'thinking') {
+            thinkingEl.textContent += payload.delta || '';
+            const len = payload.totalLen ?? thinkingEl.textContent.length;
+            setStatusRun(`Thinking... ${len} chars`);
+          }
+
+          if (event === 'raw') {
+            rawEl.textContent += payload.delta || '';
+            partialUpdater.push(payload.delta || '');
+          }
+
+          if (event === 'first_token') {
+            setStatusRun(`First ${payload.type} token at ${payload.ms}ms`);
+          }
+
+          if (event === 'ping') {
+            if (reviewCards.size === 0) {
+              setStatusRun(`Waiting... ${Math.round((payload.elapsedMs || 0) / 1000)}s`);
+            }
+          }
+
+          if (event === 'phase') {
+            if (payload.stage === 'headers') {
+              setStatusRun(`Model responding... ${payload.ms}ms`);
+            }
+          }
+
+          if (event === 'done') {
+            statusLatency.textContent = payload.msTotal ? `${payload.msTotal}ms` : '-';
+            renderResults(payload);
+            traceEl.textContent = JSON.stringify(payload.trace || [], null, 2);
+            rawEl.textContent = payload.raw || '';
+            thinkingEl.textContent = payload.thinking || '';
+            promptEl.textContent = payload.prompt || '';
+            parsedEl.textContent = JSON.stringify(payload.results?.map(r => r.review) || [], null, 2);
+            setStatusRun(`Done. Total ${payload.msTotal}ms, ok=${payload.ok}, err=${payload.err}`);
+            finish();
+          }
+
+          if (event === 'error') {
+            traceEl.textContent = JSON.stringify(payload.trace || [], null, 2);
+            rawEl.textContent = payload.raw || '';
+            thinkingEl.textContent = payload.thinking || '';
+            promptEl.textContent = payload.prompt || '';
+            if (payload.error && payload.error.includes('Client closed connection')) {
+              setStatusRun('Cancelled.');
+            } else {
+              setStatusRun(`Error: ${payload.error}`);
+            }
+            finish();
+          }
+        };
+
+        while (true) {
+          if (!isCurrent()) {
+            try { await reader.cancel(); } catch {}
+            break;
+          }
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          let idx;
+          while ((idx = buffer.indexOf('\n\n')) !== -1) {
+            const block = buffer.slice(0, idx);
+            buffer = buffer.slice(idx + 2);
+            handleEvent(block);
+          }
+        }
+      } catch (err) {
+        if (!isCurrent()) return;
+        if (err.name === 'AbortError' || cancelRequested) {
+          setStatusRun('Cancelled.');
+        } else {
+          setStatusRun(`Error: ${err.message}`);
+          resultsEl.innerHTML = `<div class="card">${err.message}</div>`;
+          finish();
+        }
+      } finally {
+        if (activeController === controller) {
+          activeController = null;
+          activeReader = null;
+        }
+        cancelRequested = false;
+        if (isCurrent() && !completed) finish();
+      }
+    }
+
+    async function smokeTest() {
+      setLoading(true, 'Running smoke test...');
+      try {
+        const res = await fetch('/api/smoke');
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Smoke test failed');
+        setStatus(`Smoke ok. Model ${data.model}. Answer: ${data.content}`);
+        rawEl.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        setStatus(`Smoke error: ${err.message}`);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    runBtn.addEventListener('click', runReview);
+    stopBtn.addEventListener('click', async () => {
+      if (!activeController) return;
+      cancelRequested = true;
+      setStatus('Cancelling...');
+      activeController.abort();
+      if (activeReader) {
+        try { await activeReader.cancel(); } catch {}
+      }
+    });
+    smokeBtn.addEventListener('click', smokeTest);
+
+    fetch('/api/cabinet')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.cabinet) {
+          cabinet = data.cabinet;
+          cabinetById = new Map(data.cabinet.map(p => [p.id, p]));
+          statusReviewers.textContent = data.cabinet.length;
+          cabinetSize = data.cabinet.length;
+          const container = document.getElementById('reviewers-container');
+          container.innerHTML = data.cabinet.map(p => `
+            <label style="flex-direction: row; align-items: center; gap: 8px;">
+              <input type="checkbox" name="reviewer" value="${p.id}" checked>
+              <span>${p.name} (${p.role})</span>
+            </label>
+          `).join('');
+        }
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
